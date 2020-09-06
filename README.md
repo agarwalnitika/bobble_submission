@@ -58,15 +58,17 @@ So the developer might be modifying the Collection and then trying to use the sa
 ## 2) How to fix the error :
 Ways to correct the error:
 	1) Get the Collection iterator again
-	2) or Use ListIterator
+	2) Iterator can be used to solve this problem. Iterators allow the caller to remove elements from the underlying collection during the iteration.
+	3) Instead of ArrayList, CopyOnWriteArrayList can be used to solve the problem. CopyOnWriteArrayList is a thread-safe variant of ArrayList in which all mutative 	operations (add, set, and so on) are implemented by making a fresh copy of the underlying array.
+	
 	
 ## 3) How to reproduce the error :
-	
+Just loop over a list using for loop and try to remove one element, you will get the ConcurrentModificatoinException.
+what happends when we loop over an ArrayList and remove selected element is that remove() is throwing "Exception in thread "main" java.util.ConcurrentModificationException".
+The real cause of ConcurrentModfiicationException is inconsistent modCount. When you are iterating over ArrayList then Iterator's next() method keep track of modCount. If you modify the collection by adding or removing element then modCount will change and it will not match with the expected modCount, hence Iterator will throw ConcurrentModificationException.
 
 
 
-
-			
 			
 	
 
